@@ -1,23 +1,35 @@
 # Go-Observability Issue Index
 
-Last updated: 2026-03-04 (JST)
+Last updated: 2026-03-05 (JST)
 Source of truth: Linear project `Go-Observability`
 
 ## Current Snapshot
-- In progress: `DEV-55`
-- Done: `DEV-51`, `DEV-52`, `DEV-53`, `DEV-54`, `DEV-56`
+- In progress: `DEV-57`
+- Done: `DEV-51`, `DEV-52`, `DEV-53`, `DEV-54`, `DEV-55`, `DEV-56`
 - Backlog: `DEV-30` and `DEV-31` to `DEV-50`
 
 ## Step 1 Rollup (Parent: DEV-30)
 
 | Issue | Title | Linear Status | Local Log |
 |---|---|---|---|
-| DEV-30 | Step 1: Go + net/http で最小 API を作る | Backlog | [DEV-30](./DEV-30.md) |
-| DEV-51 | gateway skeleton を作る (gin) | Done | [DEV-51](./DEV-51.md) |
-| DEV-52 | worker skeleton を作る (net/http) | Done | [DEV-52](./DEV-52.md) |
-| DEV-53 | gateway から worker を HTTP 呼び出しする | Done | [DEV-53](./DEV-53.md) |
-| DEV-54 | 疎通テスト（手動/E2E最小）を追加する | Done | [DEV-54](./DEV-54.md) |
-| DEV-55 | README に起動方法と検証手順を追記する | In Progress | [DEV-55](./DEV-55.md) |
+| DEV-30 | Step 1: Build a minimal API with Go + net/http | Backlog | [DEV-30](./DEV-30.md) |
+| DEV-51 | Build gateway skeleton (Gin) | Done | [DEV-51](./DEV-51.md) |
+| DEV-52 | Build worker skeleton (net/http) | Done | [DEV-52](./DEV-52.md) |
+| DEV-53 | Call worker from gateway via HTTP | Done | [DEV-53](./DEV-53.md) |
+| DEV-54 | Add manual/minimal E2E connectivity tests | Done | [DEV-54](./DEV-54.md) |
+| DEV-55 | Add startup and verification steps to README | Done | [DEV-55](./DEV-55.md) |
+
+## Step 2 Rollup (Parent: DEV-31)
+
+| Issue | Title | Linear Status | Local Log |
+|---|---|---|---|
+| DEV-57 | Containerize gateway | In Progress | [DEV-57](./DEV-57.md) |
+| DEV-58 | Containerize worker | Backlog | `doc/issues/DEV-58.md` (to be created) |
+| DEV-59 | Create base Docker Compose setup | Backlog | `doc/issues/DEV-59.md` (to be created) |
+| DEV-60 | Add OpenTelemetry Collector to Compose | Backlog | `doc/issues/DEV-60.md` (to be created) |
+| DEV-61 | Add Jaeger to Compose | Backlog | `doc/issues/DEV-61.md` (to be created) |
+| DEV-62 | Add Prometheus and Grafana to Compose | Backlog | `doc/issues/DEV-62.md` (to be created) |
+| DEV-63 | Add Step 2 integration verification and docs update | Backlog | `doc/issues/DEV-63.md` (to be created) |
 
 ## Parent Roadmap (DEV-30 to DEV-50)
 
@@ -47,6 +59,6 @@ Source of truth: Linear project `Go-Observability`
 
 ## Additional Completed Work
 
-| Issue | Title | Linear Status |
-|---|---|---|
-| DEV-56 | CI導入 (GitHub Actions) | Done |
+| Issue | Title | Linear Status | Local Log |
+|---|---|---|---|
+| DEV-56 | Introduce CI (GitHub Actions) | Done | [DEV-56](./DEV-56.md) |

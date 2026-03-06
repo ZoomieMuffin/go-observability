@@ -1,12 +1,12 @@
 # Go-Observability Issue Index
 
-Last updated: 2026-03-05 (JST)
+Last updated: 2026-03-06 (JST)
 Source of truth: Linear project `Go-Observability`
 
 ## Current Snapshot
 - In progress: `DEV-31`
-- Done: `DEV-30`, `DEV-51`, `DEV-52`, `DEV-53`, `DEV-54`, `DEV-55`, `DEV-56`, `DEV-57`
-- Backlog: `DEV-32` to `DEV-50`, `DEV-58` to `DEV-63`
+- Done: `DEV-30`, `DEV-51`, `DEV-52`, `DEV-53`, `DEV-54`, `DEV-55`, `DEV-56`, `DEV-57`, `DEV-58`, `DEV-59`
+- Backlog: `DEV-32` to `DEV-50`, `DEV-60` to `DEV-63`
 
 ## Step 1 Rollup (Parent: DEV-30)
 
@@ -24,8 +24,8 @@ Source of truth: Linear project `Go-Observability`
 | Issue | Title | Linear Status | Local Log |
 |---|---|---|---|
 | DEV-57 | Containerize gateway | Done | [DEV-57](./DEV-57.md) |
-| DEV-58 | Containerize worker | Backlog | `doc/issues/DEV-58.md` (to be created) |
-| DEV-59 | Create base Docker Compose setup | Backlog | `doc/issues/DEV-59.md` (to be created) |
+| DEV-58 | Containerize worker | Done | [DEV-58](./DEV-58.md) |
+| DEV-59 | Create base Docker Compose setup | Done | [DEV-59](./DEV-59.md) |
 | DEV-60 | Add OpenTelemetry Collector to Compose | Backlog | `doc/issues/DEV-60.md` (to be created) |
 | DEV-61 | Add Jaeger to Compose | Backlog | `doc/issues/DEV-61.md` (to be created) |
 | DEV-62 | Add Prometheus and Grafana to Compose | Backlog | `doc/issues/DEV-62.md` (to be created) |

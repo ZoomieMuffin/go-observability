@@ -1,0 +1,19 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker/Dockerfile
+    ports:
+      - "8081:8081"
+
+  gateway:
+    build:
+      context: .
+      dockerfile: docker/gateway/Dockerfile
+    depends_on:
+      - worker
+    environment:
+      WORKER_BASE_URL: http://worker:8081
+      HTTP_TIMEOUT_MS: "2000"
+    ports:
+      - "8080:8080"

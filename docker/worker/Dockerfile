@@ -1,5 +1,6 @@
 FROM golang:1.25.5-alpine AS builder
-  WORKDIR /src
+FROM golang:1.25.5-alpine AS builder
+WORKDIR /src
 
   COPY go.mod go.sum ./
   RUN go mod download
@@ -17,4 +18,3 @@ FROM golang:1.25.5-alpine AS builder
   EXPOSE 8081
 
   ENTRYPOINT ["/app/worker"]
-

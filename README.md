@@ -7,11 +7,12 @@ SRE workflows.
 
 # Go Observability
 
-Minimal Step 1 setup for a Go service flow:
+Minimal local service flow for Go observability practice:
 
 - `gateway` (Gin) on `:8080`
 - `worker` (`net/http`) on `:8081`
 - `gateway -> worker` HTTP delegation via `POST /work`
+- `otel-collector` for future OTLP ingest on `:4317` / `:4318`
 
 ## Quick Start
 
@@ -25,6 +26,8 @@ docker compose up --build
 
 Gateway uses `WORKER_BASE_URL=http://worker:8081` in Compose so it can reach
 worker over the container network.
+
+Collector is available inside Compose at `http://otel-collector:4318`.
 
 ### Run services directly
 
@@ -46,11 +49,21 @@ WORKER_BASE_URL=http://localhost:8081 HTTP_TIMEOUT_MS=2000 go run ./cmd/gateway
 | WORKER_BASE_URL | Worker base URL used by gateway | http://localhost:8081 |
 | HTTP_TIMEOUT_MS | Gateway HTTP timeout to worker (ms) | 2000 |
 
+## Environment Variables (Compose)
+
+| Name | Used by | Description |
+|---|---|---|
+| OTEL_SERVICE_NAME | gateway, worker | Logical service name for future OTel setup |
+| OTEL_EXPORTER_OTLP_ENDPOINT | gateway, worker | Collector OTLP endpoint |
+| OTEL_EXPORTER_OTLP_PROTOCOL | gateway, worker | OTLP transport protocol |
+
 ## Verification
 
 ### Docker Compose path
 
+```bash
 curl -i -X POST http://localhost:8080/work
+```
 
 Expected:
 
@@ -59,7 +72,9 @@ Expected:
 
 ### Normal path
 
+```bash
 curl -i -X POST http://localhost:8080/work
+```
 
 Expected:
 
@@ -70,7 +85,9 @@ Expected:
 
 Stop worker, then run:
 
+```bash
 curl -i -X POST http://localhost:8080/work
+```
 
 Expected:
 
@@ -79,11 +96,14 @@ Expected:
 
 ## Optional Health Checks
 
+```bash
 curl -i http://localhost:8080/health
 curl -i http://localhost:8081/health
+docker compose ps
+docker compose logs otel-collector --tail=50
+```
 
-## Project Links
+## Docs
 
-- Portfolio: [PORTFOLIO.md](./PORTFOLIO.md)
-- Issue Index: [doc/issues/INDEX.md](./doc/issues/INDEX.md)
-- Issue Logs: [doc/issues](./doc/issues/)
+- [Architecture](./docs/architecture.md)
+- [Runbook](./docs/runbook.md)

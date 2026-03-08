@@ -1,8 +1,25 @@
 services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.120.0
+    command:
+      - --config=/etc/otelcol-contrib/config.yaml
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "13133:13133"
+
   worker:
     build:
       context: .
       dockerfile: docker/worker/Dockerfile
+    depends_on:
+      - otel-collector
+    environment:
+      OTEL_SERVICE_NAME: worker
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
     ports:
       - "8081:8081"
 
@@ -12,8 +29,12 @@ services:
       dockerfile: docker/gateway/Dockerfile
     depends_on:
       - worker
+      - otel-collector
     environment:
       WORKER_BASE_URL: http://worker:8081
       HTTP_TIMEOUT_MS: "2000"
+      OTEL_SERVICE_NAME: gateway
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
     ports:
       - "8080:8080"

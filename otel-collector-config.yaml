@@ -12,6 +12,10 @@ extensions:
 
 exporters:
   debug:
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
 
 service:
   extensions:
@@ -24,6 +28,8 @@ service:
         - batch
       exporters:
         - debug
+        - otlp/jaeger
+
     metrics:
       receivers:
         - otlp
@@ -31,6 +37,7 @@ service:
         - batch
       exporters:
         - debug
+
     logs:
       receivers:
         - otlp

@@ -101,7 +101,21 @@ curl -i http://localhost:8080/health
 curl -i http://localhost:8081/health
 docker compose ps
 docker compose logs otel-collector --tail=50
+docker compose logs jaeger --tail=50
 ```
+
+## Jaeger UI
+
+After starting the Compose stack, open:
+
+```text
+http://localhost:16686
+```
+
+Expected:
+
+- Jaeger UI loads successfully
+- Traces will appear after application-side telemetry is added in a later step
 
 ## Docs
 

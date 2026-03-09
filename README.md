@@ -117,6 +117,32 @@ Expected:
 - Jaeger UI loads successfully
 - Traces will appear after application-side telemetry is added in a later step
 
+## Prometheus UI
+
+After starting the Compose stack, open:
+
+```text
+http://localhost:9090
+```
+
+Expected:
+
+- Prometheus UI loads successfully
+- Prometheus reads `/etc/prometheus/prometheus.yml`
+
+## Grafana UI
+
+After starting the Compose stack, open:
+
+```text
+http://localhost:3000
+```
+
+Expected:
+
+- Grafana UI loads successfully
+- Prometheus datasource is provisioned automatically
+
 ## Docs
 
 - [Architecture](./docs/architecture.md)

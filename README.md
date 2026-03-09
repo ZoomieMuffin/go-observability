@@ -94,14 +94,55 @@ Expected:
 - Status: 502 Bad Gateway
 - Body: {"error":"worker unavailable"}
 
+## Integrated Compose Verification
+
+Start the full local stack:
+
+```bash
+docker compose up --build -d
+```
+
+Confirm all services are running:
+
+```bash
+docker compose ps
+```
+
+Expected services:
+
+- `gateway`
+- `worker`
+- `otel-collector`
+- `jaeger`
+- `prometheus`
+- `grafana`
+
+Verify application endpoints:
+
+```bash
+curl -i http://localhost:8080/health
+curl -i http://localhost:8081/health
+curl -i -X POST http://localhost:8080/work
+```
+
+Expected:
+
+- `gateway /health` returns `200`
+- `worker /health` returns `200`
+- `POST /work` returns `200` with `{"result":"done"}`
+
 ## Optional Health Checks
 
 ```bash
 curl -i http://localhost:8080/health
 curl -i http://localhost:8081/health
 docker compose ps
+docker compose logs gateway --tail=50
+docker compose logs worker --tail=50
 docker compose logs otel-collector --tail=50
 docker compose logs jaeger --tail=50
+docker compose logs prometheus --tail=50
+docker compose logs grafana --tail=50
 ```
 
 ## Jaeger UI
@@ -142,6 +183,26 @@ Expected:
 
 - Grafana UI loads successfully
 - Prometheus datasource is provisioned automatically
+
+## Troubleshooting
+
+If one or more services do not start correctly:
+
+```bash
+docker compose ps
+docker compose logs gateway --tail=50
+docker compose logs worker --tail=50
+docker compose logs otel-collector --tail=50
+docker compose logs jaeger --tail=50
+docker compose logs prometheus --tail=50
+docker compose logs grafana --tail=50
+```
+
+Check for:
+
+- port conflicts on `3000`, `8080`, `8081`, `9090`, `16686`, `4317`, `4318`
+- missing provisioning files or config file parse errors
+- service startup failures or dependency connection errors
 
 ## Docs
 

@@ -2,13 +2,14 @@ package main
 
 import (
 	"io"
-	"net/http"
-	"time"
-
-	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
+	"time"
+
+	"github.com/ZoomieMuffin/go-observability/internal/otel"
+	"github.com/gin-gonic/gin"
 )
 
 func envOrDefault(key, fallback string) string {
@@ -32,6 +33,10 @@ func envIntOrDefault(key string, fallback int) int {
 }
 
 func main() {
+	if _, err := otel.NewResource("gateway"); err != nil {
+		log.Fatal(err)
+	}
+
 	workerBaseURL := envOrDefault("WORKER_BASE_URL", "http://localhost:8081")
 	httpTimeoutMS := envIntOrDefault("HTTP_TIMEOUT_MS", 2000)
 
@@ -50,7 +55,11 @@ func main() {
 			c.JSON(http.StatusBadGateway, gin.H{"error": "worker unavailable"})
 			return
 		}
-		defer resp.Body.Close()
+		defer func() {
+			if err := resp.Body.Close(); err != nil {
+				log.Printf("close worker response body: %v", err)
+			}
+		}()
 
 		if resp.StatusCode >= http.StatusInternalServerError {
 			c.JSON(http.StatusBadGateway, gin.H{"error": "worker error"})
@@ -63,5 +72,7 @@ func main() {
 	})
 
 	log.Printf("gateway start addr=:8080 worker=%s timeout_ms=%d", workerBaseURL, httpTimeoutMS)
-	r.Run(":8080")
+	if err := r.Run(":8080"); err != nil {
+		log.Fatal(err)
+	}
 }

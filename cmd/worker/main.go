@@ -12,6 +12,9 @@ func main() {
 	if _, err := otel.InitTracerProvider(context.Background(), "worker"); err != nil {
 		log.Fatal(err)
 	}
+	if _, err := otel.InitMeterProvider(context.Background(), "worker"); err != nil {
+		log.Fatal(err)
+	}
 
 	mux := http.NewServeMux()
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/ZoomieMuffin/go-observability/internal/otel"
 	"log"
@@ -8,7 +9,7 @@ import (
 )
 
 func main() {
-	if _, err := otel.NewResource("worker"); err != nil {
+	if _, err := otel.InitTracerProvider(context.Background(), "worker"); err != nil {
 		log.Fatal(err)
 	}
 

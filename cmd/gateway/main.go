@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"io"
 	"log"
 	"net/http"
@@ -33,7 +34,7 @@ func envIntOrDefault(key string, fallback int) int {
 }
 
 func main() {
-	if _, err := otel.NewResource("gateway"); err != nil {
+	if _, err := otel.InitTracerProvider(context.Background(), "gateway"); err != nil {
 		log.Fatal(err)
 	}
 

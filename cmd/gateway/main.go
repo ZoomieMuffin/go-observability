@@ -37,6 +37,9 @@ func main() {
 	if _, err := otel.InitTracerProvider(context.Background(), "gateway"); err != nil {
 		log.Fatal(err)
 	}
+	if _, err := otel.InitMeterProvider(context.Background(), "gateway"); err != nil {
+		log.Fatal(err)
+	}
 
 	workerBaseURL := envOrDefault("WORKER_BASE_URL", "http://localhost:8081")
 	httpTimeoutMS := envIntOrDefault("HTTP_TIMEOUT_MS", 2000)
